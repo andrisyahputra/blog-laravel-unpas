@@ -1,12 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Halaman Blog</title>
-</head>
-<body>
-    <h1>Halaman Blog</h1>
-</body>
-</html>
+{{-- @dd($posts) --}}
+
+@extends('layout.main')
+
+@section('container')
+
+    @foreach ($posts as $item)
+        <h2><a href="/posts/{{ $item['slug'] }}">{{ $item['title'] }}</a></h1>
+        <h5>{{ $item['author'] }}</h5>
+        <p>{{ $item['post'] }}</p>
+    @endforeach
+
+@endsection

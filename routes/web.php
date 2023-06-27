@@ -14,18 +14,61 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    $data['title'] = "Home";
+    return view('home', $data);
+});
+
+Route::get('/about', function () {
     $data = [
         "nama" => "Andri Syahputra",
         "email" => "andrisyahputra2209@gmail.com",
         "gambar" => "saya.jpg"
     ];
-    return view('home', $data);
-});
-
-Route::get('/about', function () {
-    return view('about');
+    $data['title'] = "About";
+    return view('about', $data);
 });
 
 Route::get('/blog', function () {
-    return view('blog');
+    $data['posts'] = [
+        [
+            "title" => "Judul Post Pertama",
+            "slug" => "judul-post-pertama",
+            "author" => "Andri Syahputra",
+            "post" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat non, aliquid placeat officia unde exercitationem nam eveniet, delectus eaque cum deserunt ratione. Ipsum, ea quo aspernatur, doloribus sint quos nostrum ratione quia inventore quaerat ex exercitationem reiciendis? Dolore dicta quod, illo dolorem assumenda, numquam architecto odio, iste iure nulla in."
+        ],
+        [
+            "title" => "Judul Post Kedua",
+            "slug" => "judul-post-kedua",
+            "author" => "Bagus Setiawan",
+            "post" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat non, aliquid placeat officia unde exercitationem nam eveniet, delectus eaque cum deserunt ratione."
+        ],
+    ];
+    $data['title'] = "Blog";
+    return view('blog', $data);
+});
+
+Route::get('posts/{slug}', function($slug){
+    $posts = [
+        [
+            "title" => "Judul Post Pertama",
+            "slug" => "judul-post-pertama",
+            "author" => "Andri Syahputra",
+            "post" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat non, aliquid placeat officia unde exercitationem nam eveniet, delectus eaque cum deserunt ratione. Ipsum, ea quo aspernatur, doloribus sint quos nostrum ratione quia inventore quaerat ex exercitationem reiciendis? Dolore dicta quod, illo dolorem assumenda, numquam architecto odio, iste iure nulla in."
+        ],
+        [
+            "title" => "Judul Post Kedua",
+            "slug" => "judul-post-kedua",
+            "author" => "Bagus Setiawan",
+            "post" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat non, aliquid placeat officia unde exercitationem nam eveniet, delectus eaque cum deserunt ratione."
+        ],
+    ];
+    $data["post"] = [];
+    foreach ($posts as $item) {
+        if($item["slug"] == $slug){
+            $data["post"] = $item;
+        }
+    }
+
+    $data['title'] = "Post";
+    return view('post', $data);
 });
