@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PostController;
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,47 +30,6 @@ Route::get('/about', function () {
     return view('about', $data);
 });
 
-Route::get('/blog', function () {
-    $data['posts'] = [
-        [
-            "title" => "Judul Post Pertama",
-            "slug" => "judul-post-pertama",
-            "author" => "Andri Syahputra",
-            "post" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat non, aliquid placeat officia unde exercitationem nam eveniet, delectus eaque cum deserunt ratione. Ipsum, ea quo aspernatur, doloribus sint quos nostrum ratione quia inventore quaerat ex exercitationem reiciendis? Dolore dicta quod, illo dolorem assumenda, numquam architecto odio, iste iure nulla in."
-        ],
-        [
-            "title" => "Judul Post Kedua",
-            "slug" => "judul-post-kedua",
-            "author" => "Bagus Setiawan",
-            "post" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat non, aliquid placeat officia unde exercitationem nam eveniet, delectus eaque cum deserunt ratione."
-        ],
-    ];
-    $data['title'] = "Blog";
-    return view('blog', $data);
-});
+Route::get('/blog', [PostController::class, 'index']);
 
-Route::get('posts/{slug}', function($slug){
-    $posts = [
-        [
-            "title" => "Judul Post Pertama",
-            "slug" => "judul-post-pertama",
-            "author" => "Andri Syahputra",
-            "post" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat non, aliquid placeat officia unde exercitationem nam eveniet, delectus eaque cum deserunt ratione. Ipsum, ea quo aspernatur, doloribus sint quos nostrum ratione quia inventore quaerat ex exercitationem reiciendis? Dolore dicta quod, illo dolorem assumenda, numquam architecto odio, iste iure nulla in."
-        ],
-        [
-            "title" => "Judul Post Kedua",
-            "slug" => "judul-post-kedua",
-            "author" => "Bagus Setiawan",
-            "post" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat non, aliquid placeat officia unde exercitationem nam eveniet, delectus eaque cum deserunt ratione."
-        ],
-    ];
-    $data["post"] = [];
-    foreach ($posts as $item) {
-        if($item["slug"] == $slug){
-            $data["post"] = $item;
-        }
-    }
-
-    $data['title'] = "Post";
-    return view('post', $data);
-});
+Route::get('posts/{slug}', [PostController::class, 'show']);
